@@ -323,16 +323,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="관심 리그" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7O-Fz-m7f">
-                                <rect key="frame" x="20" y="79" width="374" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="pIM-zw-36P"/>
-                                </constraints>
+                                <rect key="frame" x="20" y="94" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QBU-mT-0Nm">
-                                <rect key="frame" x="20" y="174" width="374" height="30"/>
+                                <rect key="frame" x="20" y="194.5" width="374" height="50"/>
                                 <menu key="menu" id="HH4-ND-fdq">
                                     <children>
                                         <command title="Item 1" id="Kpb-vO-y1m"/>
@@ -342,9 +339,9 @@
                                 <state key="normal" title="Button"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h93-OS-0wl">
-                                <rect key="frame" x="20" y="129" width="374" height="30"/>
+                                <rect key="frame" x="20" y="129.5" width="374" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="IpF-Ux-Nnh"/>
+                                    <constraint firstAttribute="height" constant="50" id="QN5-uE-iRL"/>
                                 </constraints>
                                 <menu key="menu" id="iSF-hV-nk5">
                                     <children>
@@ -355,13 +352,16 @@
                                 <state key="normal" title="Button"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="관심 팀" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vr3-gX-LWe">
-                                <rect key="frame" x="20" y="324" width="374" height="35"/>
+                                <rect key="frame" x="20" y="376.5" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-XT-nfF">
-                                <rect key="frame" x="20" y="374" width="374" height="30"/>
+                                <rect key="frame" x="20" y="412" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Txc-EO-8ir"/>
+                                </constraints>
                                 <menu key="menu" id="0Rl-aF-UyE">
                                     <children>
                                         <command title="Item 1" id="1V7-JY-Fmh"/>
@@ -375,24 +375,22 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="wI8-ch-JJC" firstAttribute="trailing" secondItem="QBU-mT-0Nm" secondAttribute="trailing" constant="20" id="14L-4s-eQ2"/>
-                            <constraint firstItem="wI8-ch-JJC" firstAttribute="bottom" secondItem="JvP-XT-nfF" secondAttribute="bottom" constant="400" id="5dO-dp-Z6O"/>
-                            <constraint firstItem="QBU-mT-0Nm" firstAttribute="top" secondItem="h93-OS-0wl" secondAttribute="bottom" constant="15" id="BLv-wv-hTD"/>
-                            <constraint firstItem="JvP-XT-nfF" firstAttribute="top" secondItem="Vr3-gX-LWe" secondAttribute="bottom" constant="15" id="I9g-Rn-Xh1"/>
+                            <constraint firstItem="wI8-ch-JJC" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="JvP-XT-nfF" secondAttribute="bottom" constant="400" id="ADs-n4-Z9W"/>
+                            <constraint firstItem="JvP-XT-nfF" firstAttribute="top" secondItem="Vr3-gX-LWe" secondAttribute="bottom" constant="15" id="LuW-BS-FGv"/>
                             <constraint firstItem="wI8-ch-JJC" firstAttribute="trailing" secondItem="h93-OS-0wl" secondAttribute="trailing" constant="20" id="MgD-E7-VYH"/>
-                            <constraint firstItem="QBU-mT-0Nm" firstAttribute="height" secondItem="h93-OS-0wl" secondAttribute="height" id="PTY-Fh-a3U"/>
-                            <constraint firstItem="Vr3-gX-LWe" firstAttribute="height" secondItem="B7O-Fz-m7f" secondAttribute="height" id="Qke-IA-w2j"/>
+                            <constraint firstItem="QBU-mT-0Nm" firstAttribute="height" secondItem="h93-OS-0wl" secondAttribute="height" id="RGe-Th-Ul7"/>
+                            <constraint firstItem="h93-OS-0wl" firstAttribute="top" secondItem="B7O-Fz-m7f" secondAttribute="bottom" constant="15" id="Wgi-a5-EaZ"/>
                             <constraint firstItem="wI8-ch-JJC" firstAttribute="trailing" secondItem="JvP-XT-nfF" secondAttribute="trailing" constant="20" id="XWL-gx-hPq"/>
                             <constraint firstItem="wI8-ch-JJC" firstAttribute="trailing" secondItem="Vr3-gX-LWe" secondAttribute="trailing" constant="20" id="ZHQ-8n-btd"/>
+                            <constraint firstItem="QBU-mT-0Nm" firstAttribute="top" secondItem="h93-OS-0wl" secondAttribute="bottom" constant="15" id="ZWd-rj-Goe"/>
                             <constraint firstItem="QBU-mT-0Nm" firstAttribute="leading" secondItem="wI8-ch-JJC" secondAttribute="leading" constant="20" id="atg-7J-yAA"/>
                             <constraint firstItem="Vr3-gX-LWe" firstAttribute="leading" secondItem="wI8-ch-JJC" secondAttribute="leading" constant="20" id="b1R-D2-LdO"/>
                             <constraint firstItem="JvP-XT-nfF" firstAttribute="leading" secondItem="wI8-ch-JJC" secondAttribute="leading" constant="20" id="blX-9R-0PU"/>
-                            <constraint firstItem="JvP-XT-nfF" firstAttribute="height" secondItem="h93-OS-0wl" secondAttribute="height" id="f7b-Fr-XM4"/>
                             <constraint firstItem="wI8-ch-JJC" firstAttribute="trailing" secondItem="B7O-Fz-m7f" secondAttribute="trailing" constant="20" id="gds-ID-Phh"/>
-                            <constraint firstItem="h93-OS-0wl" firstAttribute="top" secondItem="B7O-Fz-m7f" secondAttribute="bottom" constant="15" id="i87-Va-yzH"/>
-                            <constraint firstItem="Vr3-gX-LWe" firstAttribute="top" secondItem="QBU-mT-0Nm" secondAttribute="bottom" constant="120" id="ud6-aM-Kah"/>
+                            <constraint firstItem="B7O-Fz-m7f" firstAttribute="top" secondItem="wI8-ch-JJC" secondAttribute="top" constant="50" id="nRb-7M-EZT"/>
+                            <constraint firstItem="Vr3-gX-LWe" firstAttribute="top" relation="lessThanOrEqual" secondItem="QBU-mT-0Nm" secondAttribute="bottom" constant="132" id="rel-sQ-ehL"/>
                             <constraint firstItem="B7O-Fz-m7f" firstAttribute="leading" secondItem="wI8-ch-JJC" secondAttribute="leading" constant="20" id="xXC-pY-lSG"/>
                             <constraint firstItem="h93-OS-0wl" firstAttribute="leading" secondItem="wI8-ch-JJC" secondAttribute="leading" constant="20" id="xYf-9t-y0R"/>
-                            <constraint firstItem="B7O-Fz-m7f" firstAttribute="top" secondItem="wI8-ch-JJC" secondAttribute="top" constant="35" id="yDb-BV-k4y"/>
                         </constraints>
                     </view>
                 </viewController>

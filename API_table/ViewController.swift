@@ -20,7 +20,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
-        return 5 // 행의 개수를 5롷 지정
+        return 5 // 행의 개수를 5로 지정
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // 행 관련 함수

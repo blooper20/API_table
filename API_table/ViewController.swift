@@ -24,12 +24,17 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // 행 관련 함수
+        
         let plCell = tableView.dequeueReusableCell(withIdentifier: "playerCell", for: indexPath) as! PlayerTableViewCell
         // cell의 아이디가 "playerCell"인 것을 사용
         plCell.playerNameLbl.text = indexPath.description
         return plCell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 행을 클릭했을 때
+        performSegue(withIdentifier: "leagueToTeam", sender: self)
+        // cell을 클릭했을 때 leagueToTeam Segue로 이동하고 보내는 값은 self로 처리한다.
+    }
 
    
 

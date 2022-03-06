@@ -8,8 +8,114 @@
 import UIKit
 import Foundation
 
+
+// MARK: - TeamElement
+struct TeamElement: Codable {
+    let teamKey, teamName: String
+    let teamBadge: String
+    let players: [Player]
+    let coaches: [Coach]
+    
+    enum CodingKeys: String, CodingKey {
+        case teamKey = "team_key"
+        case teamName = "team_name"
+        case teamBadge = "team_badge"
+        case players, coaches
+    }
+}
+
+// MARK: - Coach
+struct Coach: Codable {
+    let coachName, coachCountry, coachAge: String
+    
+    enum CodingKeys: String, CodingKey {
+        case coachName = "coach_name"
+        case coachCountry = "coach_country"
+        case coachAge = "coach_age"
+    }
+}
+
+// MARK: - Player
+struct Player: Codable {
+    let playerKey: Int
+    let playerID: String
+    let playerImage: String
+    let playerName, playerNumber, playerCountry: String
+    let playerType: PlayerType
+    let playerAge, playerMatchPlayed, playerGoals, playerYellowCards: String
+    let playerRedCards: String
+    let playerInjured: PlayerInjured
+    let playerSubstituteOut, playerSubstitutesOnBench, playerAssists, playerIsCaptain: String
+    let playerShotsTotal, playerGoalsConceded, playerFoulsCommitted, playerTackles: String
+    let playerBlocks, playerCrossesTotal, playerInterceptions, playerClearances: String
+    let playerDispossesed, playerSaves, playerInsideBoxSaves, playerDuelsTotal: String
+    let playerDuelsWon, playerDribbleAttempts, playerDribbleSucc, playerPenComm: String
+    let playerPenWon, playerPenScored, playerPenMissed, playerPasses: String
+    let playerPassesAccuracy, playerKeyPasses, playerWoordworks, playerRating: String
+    
+    enum CodingKeys: String, CodingKey {
+        case playerKey = "player_key"
+        case playerID = "player_id"
+        case playerImage = "player_image"
+        case playerName = "player_name"
+        case playerNumber = "player_number"
+        case playerCountry = "player_country"
+        case playerType = "player_type"
+        case playerAge = "player_age"
+        case playerMatchPlayed = "player_match_played"
+        case playerGoals = "player_goals"
+        case playerYellowCards = "player_yellow_cards"
+        case playerRedCards = "player_red_cards"
+        case playerInjured = "player_injured"
+        case playerSubstituteOut = "player_substitute_out"
+        case playerSubstitutesOnBench = "player_substitutes_on_bench"
+        case playerAssists = "player_assists"
+        case playerIsCaptain = "player_is_captain"
+        case playerShotsTotal = "player_shots_total"
+        case playerGoalsConceded = "player_goals_conceded"
+        case playerFoulsCommitted = "player_fouls_committed"
+        case playerTackles = "player_tackles"
+        case playerBlocks = "player_blocks"
+        case playerCrossesTotal = "player_crosses_total"
+        case playerInterceptions = "player_interceptions"
+        case playerClearances = "player_clearances"
+        case playerDispossesed = "player_dispossesed"
+        case playerSaves = "player_saves"
+        case playerInsideBoxSaves = "player_inside_box_saves"
+        case playerDuelsTotal = "player_duels_total"
+        case playerDuelsWon = "player_duels_won"
+        case playerDribbleAttempts = "player_dribble_attempts"
+        case playerDribbleSucc = "player_dribble_succ"
+        case playerPenComm = "player_pen_comm"
+        case playerPenWon = "player_pen_won"
+        case playerPenScored = "player_pen_scored"
+        case playerPenMissed = "player_pen_missed"
+        case playerPasses = "player_passes"
+        case playerPassesAccuracy = "player_passes_accuracy"
+        case playerKeyPasses = "player_key_passes"
+        case playerWoordworks = "player_woordworks"
+        case playerRating = "player_rating"
+    }
+}
+
+enum PlayerInjured: String, Codable {
+    case no = "No"
+    case yes = "Yes"
+}
+
+enum PlayerType: String, Codable {
+    case defenders = "Defenders"
+    case forwards = "Forwards"
+    case goalkeepers = "Goalkeepers"
+    case midfielders = "Midfielders"
+}
+
+typealias Team = [TeamElement]
+
+
+
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
-   
+    
     @IBOutlet weak var playerTable: UITableView! // 관심 팀의 플레이어 테이블을 playerTable로 선언
     @IBOutlet weak var playerNameLbl: UILabel!
     @IBOutlet weak var playerCountryLbl: UILabel!
@@ -19,15 +125,52 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var playerPositionLbl: UILabel!
     @IBOutlet weak var playerImg: UIImageView!
     
+    let footballURL = "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=42cd81facec04ac1a8321d9457890b72043b63281d7b83abff0673002ffbca0e"
+    
+    var footballData : TeamElement?
+    // TeamElement형 프로퍼티를 만든다
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         playerTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
-        API()
+        getData()
         
     }
-    let decoder = JSONDecoder()
-    let product = try decoder.decode(TeamElement.self, from: )
+    //    let decoder = JSONDecoder()
+    //    let product = try decoder.decode(TeamElement.self, from: )
+    
+    func getData() {
+        if let url = URL(string: footballURL) {
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                if let JSONdata = data {
+                    print(JSONdata)
+                    let dataString = String(data: JSONdata, encoding: .utf8)
+                    //                    print(dataString!)
+                    let decoder = JSONDecoder()
+                    do{
+                        let decodedData = try decoder.decode([TeamElement].self, from: JSONdata)
+                        print(decodedData[0].players[0].playerName)
+                        print(decodedData[0].players[0].playerAge)
+                        //                        self.[TeamElement] = decodedData
+                    } catch {
+                        print(error)
+                    }
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
+    
+    
     let player:[String] = ["playerImage","playerName","playerNumber","playerCountry","playerAge","playerRating","playerType"]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         
@@ -46,7 +189,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         performSegue(withIdentifier: "leagueToTeam", sender: self)
         // cell을 클릭했을 때 leagueToTeam Segue로 이동하고 보내는 값은 self로 처리한다.
     }
-
-
+    
+    
 }
-

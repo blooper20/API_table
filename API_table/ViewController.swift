@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Foundation
 
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
    
@@ -26,7 +26,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         API()
         
     }
-
+    let decoder = JSONDecoder()
+    let product = try decoder.decode(TeamElement.self, from: )
     let player:[String] = ["playerImage","playerName","playerNumber","playerCountry","playerAge","playerRating","playerType"]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         
@@ -37,7 +38,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
         let plCell = tableView.dequeueReusableCell(withIdentifier: "playerCell", for: indexPath) as! PlayerTableViewCell
         // cell의 아이디가 "playerCell"인 것을 사용
-        plCell.playerNameLbl.text = TeamElement.CodingKeys.teamName.stringValue
+        plCell.playerNameLbl.text = TeamElement.CodingKeys.teamName.rawValue
         return plCell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

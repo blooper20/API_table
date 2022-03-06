@@ -53,6 +53,8 @@ struct Player: Codable {
     let playerPenWon, playerPenScored, playerPenMissed, playerPasses: String
     let playerPassesAccuracy, playerKeyPasses, playerWoordworks, playerRating: String
     
+    
+    
     enum CodingKeys: String, CodingKey {
         case playerKey = "player_key"
         case playerID = "player_id"
@@ -121,20 +123,21 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var playerCountryLbl: UILabel!
     @IBOutlet weak var playerRatingLbl: UILabel!
     @IBOutlet weak var playerAgeLbl: UILabel!
-    @IBOutlet weak var playerBackNumberLbl: UILabel!
-    @IBOutlet weak var playerPositionLbl: UILabel!
+    @IBOutlet weak var playerNOLbl: UILabel!
+    @IBOutlet weak var playerPosLbl: UILabel!
     @IBOutlet weak var playerImg: UIImageView!
     
     let footballURL = "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=42cd81facec04ac1a8321d9457890b72043b63281d7b83abff0673002ffbca0e"
     
-    var footballData : TeamElement?
+    var footballData : [TeamElement]?
     // TeamElement형 프로퍼티를 만든다
     
     override func viewDidLoad() {
         super.viewDidLoad()
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         playerTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
-        getData()
+        getData() // API를 호출하여 디코딩하는 함수 호출
+        
         
     }
     //    let decoder = JSONDecoder()
@@ -143,7 +146,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     func getData() {
         if let url = URL(string: footballURL) {
             let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { (data, response, error) in
+            let task = session.dataTask(with: url) { [self] (data, response, error) in
                 if error != nil {
                     print(error!)
                     return
@@ -155,33 +158,46 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                     let decoder = JSONDecoder()
                     do{
                         let decodedData = try decoder.decode([TeamElement].self, from: JSONdata)
-                        print(decodedData[0].players[0].playerName)
-                        print(decodedData[0].players[0].playerAge)
-                        //                        self.[TeamElement] = decodedData
+                        // JSONdata인 [TeamElement]를 디코딩 하여 decodedData에 저장
+                        //                        print(decodedData[0].players[0].playerName)
+                        //                        print(decodedData[0].players[0].playerAge)
+                        self.footballData = decodedData    // TeamElement형 프로퍼티에 decodedData 저장
+                        
+                        DispatchQueue.main.async {
+                            self.playerTable.reloadData()
+                        } // 메인 스레드에서 playerTable을 reloadData한다.
+                        
+//                        print(self.footballData![0].players[0].playerAge)
+//                        print(self.footballData![0].players[0].playerImage)
                     } catch {
                         print(error)
                     }
-                    
                 }
             }
             task.resume()
         }
     }
     
-    
-    
-    
-    let player:[String] = ["playerImage","playerName","playerNumber","playerCountry","playerAge","playerRating","playerType"]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
-        
-        return self.player.count // 행의 개수를 5로 지정
+        return 40 // 행의 개수를 5로 지정
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // 행 관련 함수
         
         let plCell = tableView.dequeueReusableCell(withIdentifier: "playerCell", for: indexPath) as! PlayerTableViewCell
         // cell의 아이디가 "playerCell"인 것을 사용
-        plCell.playerNameLbl.text = TeamElement.CodingKeys.teamName.rawValue
+        plCell.playerNameLbl.text = footballData?[0].players[indexPath.row].playerName
+        plCell.playerCountryLbl.text = footballData?[0].players[indexPath.row].playerCountry
+        plCell.playerRatingLbl.text = footballData?[0].players[indexPath.row].playerRating
+        plCell.playerAgeLbl.text = footballData?[0].players[indexPath.row].playerAge
+        plCell.playerNOLbl.text = footballData?[0].players[indexPath.row].playerNumber
+        //        plCell.playerPosLbl.text = footballData?[0].players[indexPath.row].playerType
+        
+//        let imageUrl = URL(string: "\(footballData?[0].players[indexPath.row].playerImage)")
+//        let imgData = try Data(contentsOf: imageUrl!)
+//        plCell.playerImg.image = UIImage(data: imgData)
+        
+        plCell.playerImg.image = UIImage(named: "\(footballData?[0].players[indexPath.row].playerImage)")
         return plCell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

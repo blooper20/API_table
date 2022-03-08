@@ -137,7 +137,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         playerTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         getData() // API를 호출하여 디코딩하는 함수 호출
-        
+       
         
     }
     //    let decoder = JSONDecoder()
@@ -167,8 +167,9 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                             self.playerTable.reloadData()
                         } // 메인 스레드에서 playerTable을 reloadData한다.
                         
-//                        print(self.footballData![0].players[0].playerAge)
-//                        print(self.footballData![0].players[0].playerImage)
+                        print(self.footballData![0].players[0].playerImage)
+                        print(type(of: self.footballData![0].players[0].playerImage))
+                        
                     } catch {
                         print(error)
                     }
@@ -179,7 +180,9 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
-        return 40 // 행의 개수를 5로 지정
+        let playerCount : Int! = footballData?[0].players.count
+            
+        return 39 // 행의 개수를 5로 지정
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // 행 관련 함수
@@ -191,20 +194,43 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         plCell.playerRatingLbl.text = footballData?[0].players[indexPath.row].playerRating
         plCell.playerAgeLbl.text = footballData?[0].players[indexPath.row].playerAge
         plCell.playerNOLbl.text = footballData?[0].players[indexPath.row].playerNumber
+        
+        let playerPos = footballData?[0].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
+        plCell.playerPosLbl.text = playerPos
         //        plCell.playerPosLbl.text = footballData?[0].players[indexPath.row].playerType
         
 //        let imageUrl = URL(string: "\(footballData?[0].players[indexPath.row].playerImage)")
 //        let imgData = try Data(contentsOf: imageUrl!)
 //        plCell.playerImg.image = UIImage(data: imgData)
         
-        plCell.playerImg.image = UIImage(named: "\(footballData?[0].players[indexPath.row].playerImage)")
+//        if let img = footballData?[0].players[indexPath.row].playerImage {
+//            print(type(of: img))
+//            let playerImgUrl: URL! = URL(string: img)
+//            print(type(of: playerImgUrl))
+//            do{
+//                let imageData = try! Data(contentsOf: playerImgUrl!)
+//                plCell.playerImg.image = UIImage(data: imageData)
+//                DispatchQueue.main.async {
+//                    self.playerTable.reloadData()
+//                } // 메인 스레드에서 playerTable을 reloadData한다.
+//            } catch {
+//                print("error")
+//            }
+//
+//
+//        }
+
+        let playerImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/players/61937_miguel-san-roman.jpg")
+        let imageData = try! Data(contentsOf: playerImgUrl!)
+        plCell.playerImg.image = UIImage(data: imageData)
+        
+//
+//        let imageData = try! Data(contentsOf: playerImgUrl!)
+        //        print(type(of: playerImgUrl))
+//        print(type(of: imageData))
+//        plCell.playerImg.image = UIImage(data: imageData)
+        
+//        plCell.playerImg.image = UIImage(named: "\(footballData?[0].players[indexPath.row].playerImage)")
         return plCell
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 행을 클릭했을 때
-        performSegue(withIdentifier: "leagueToTeam", sender: self)
-        // cell을 클릭했을 때 leagueToTeam Segue로 이동하고 보내는 값은 self로 처리한다.
-    }
-    
-    
 }

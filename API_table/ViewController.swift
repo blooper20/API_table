@@ -120,15 +120,19 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     @IBOutlet weak var playerTable: UITableView! // 관심 팀의 플레이어 테이블을 playerTable로 선언
     @IBOutlet weak var playerNameLbl: UILabel!
-    @IBOutlet weak var playerCountryLbl: UILabel!
     @IBOutlet weak var playerRatingLbl: UILabel!
     @IBOutlet weak var playerAgeLbl: UILabel!
     @IBOutlet weak var playerNOLbl: UILabel!
     @IBOutlet weak var playerPosLbl: UILabel!
     @IBOutlet weak var playerImg: UIImageView!
     
-    let footballURL = "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=42cd81facec04ac1a8321d9457890b72043b63281d7b83abff0673002ffbca0e"
+    @IBOutlet weak var teamNameLbl: UILabel!
+    @IBOutlet weak var teamCoachLbl: UILabel!
+    @IBOutlet weak var teamImg: UIImageView!
     
+    
+    
+    let footballURL = "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=42cd81facec04ac1a8321d9457890b72043b63281d7b83abff0673002ffbca0e"
     var footballData : [TeamElement]?
     // TeamElement형 프로퍼티를 만든다
     
@@ -137,11 +141,21 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         playerTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         getData() // API를 호출하여 디코딩하는 함수 호출
-       
         
+        let teamNameString = self.footballData?[0].teamName
+        let coachNameString = self.footballData?[0].coaches[0].coachName
+        
+        teamNameLbl.text = teamNameString
+        teamCoachLbl.text = coachNameString
+        
+        let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg")
+        let teamImageData = try! Data(contentsOf: teamImgUrl!)
+        teamImg.image = UIImage(data: teamImageData)
+        
+        
+        
+
     }
-    //    let decoder = JSONDecoder()
-    //    let product = try decoder.decode(TeamElement.self, from: )
     
     func getData() {
         if let url = URL(string: footballURL) {
@@ -166,10 +180,13 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                         DispatchQueue.main.async {
                             self.playerTable.reloadData()
                         } // 메인 스레드에서 playerTable을 reloadData한다.
-                        
-                        print(self.footballData![0].players[0].playerImage)
-                        print(type(of: self.footballData![0].players[0].playerImage))
-                        
+                        print(type(of: footballData?[0].teamName)) // 어떤 타입인지 확인하기 위한 코드
+                        guard let teamImgString = self.footballData?[0].teamBadge else { return } // 가드렛 문을 활용한 옵셔널 바인딩
+                        guard let teamNameString = self.footballData?[0].teamName else { return } // 가드렛 문을 활용한 옵셔널 바인딩
+                        guard let coachNameString = self.footballData?[0].coaches[0].coachName else { return } // 가드렛 문을 활용한 옵셔널 바인딩
+                        print(teamImgString)
+                        print(teamNameString)
+                        print(coachNameString)
                     } catch {
                         print(error)
                     }
@@ -178,11 +195,12 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             task.resume()
         }
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         let playerCount : Int! = footballData?[0].players.count
             
-        return 39 // 행의 개수를 5로 지정
+        return 40 // 행의 개수를 40로 지정
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // 행 관련 함수
@@ -190,15 +208,12 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         let plCell = tableView.dequeueReusableCell(withIdentifier: "playerCell", for: indexPath) as! PlayerTableViewCell
         // cell의 아이디가 "playerCell"인 것을 사용
         plCell.playerNameLbl.text = footballData?[0].players[indexPath.row].playerName
-        plCell.playerCountryLbl.text = footballData?[0].players[indexPath.row].playerCountry
         plCell.playerRatingLbl.text = footballData?[0].players[indexPath.row].playerRating
         plCell.playerAgeLbl.text = footballData?[0].players[indexPath.row].playerAge
         plCell.playerNOLbl.text = footballData?[0].players[indexPath.row].playerNumber
         
         let playerPos = footballData?[0].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
         plCell.playerPosLbl.text = playerPos
-        //        plCell.playerPosLbl.text = footballData?[0].players[indexPath.row].playerType
-        
 //        let imageUrl = URL(string: "\(footballData?[0].players[indexPath.row].playerImage)")
 //        let imgData = try Data(contentsOf: imageUrl!)
 //        plCell.playerImg.image = UIImage(data: imgData)
@@ -219,7 +234,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
 //
 //
 //        }
-
+        
+//        guard let playerImgString = footballData?[0].players[indexPath.row].playerImage else { return }
         let playerImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/players/61937_miguel-san-roman.jpg")
         let imageData = try! Data(contentsOf: playerImgUrl!)
         plCell.playerImg.image = UIImage(data: imageData)

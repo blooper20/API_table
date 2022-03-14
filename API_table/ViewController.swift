@@ -53,8 +53,6 @@ struct Player: Codable {
     let playerPenWon, playerPenScored, playerPenMissed, playerPasses: String
     let playerPassesAccuracy, playerKeyPasses, playerWoordworks, playerRating: String
     
-    
-    
     enum CodingKeys: String, CodingKey {
         case playerKey = "player_key"
         case playerID = "player_id"
@@ -114,8 +112,6 @@ enum PlayerType: String, Codable {
 
 typealias Team = [TeamElement]
 
-
-
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var playerTable: UITableView! // 관심 팀의 플레이어 테이블을 playerTable로 선언
@@ -136,6 +132,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     var footballData : [TeamElement]?
     // TeamElement형 프로퍼티를 만든다
     
+    var test : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
@@ -145,16 +143,16 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         let teamNameString = self.footballData?[0].teamName
         let coachNameString = self.footballData?[0].coaches[0].coachName
         
-        teamNameLbl.text = teamNameString
-        teamCoachLbl.text = coachNameString
+        test = teamNameString
+        print("뭐가 문젠데 진짜 :\(teamNameString)")
+        
+        teamNameLbl.text = test ?? "팀 이름"
+        teamCoachLbl.text = coachNameString ?? "감독이름"
         
         let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg")
         let teamImageData = try! Data(contentsOf: teamImgUrl!)
         teamImg.image = UIImage(data: teamImageData)
         
-        
-        
-
     }
     
     func getData() {
@@ -165,27 +163,33 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                     print(error!)
                     return
                 }
+                
                 if let JSONdata = data {
                     print(JSONdata)
                     let dataString = String(data: JSONdata, encoding: .utf8)
-                    //                    print(dataString!)
                     let decoder = JSONDecoder()
                     do{
                         let decodedData = try decoder.decode([TeamElement].self, from: JSONdata)
                         // JSONdata인 [TeamElement]를 디코딩 하여 decodedData에 저장
-                        //                        print(decodedData[0].players[0].playerName)
-                        //                        print(decodedData[0].players[0].playerAge)
                         self.footballData = decodedData    // TeamElement형 프로퍼티에 decodedData 저장
-                        
                         DispatchQueue.main.async {
                             self.playerTable.reloadData()
                         } // 메인 스레드에서 playerTable을 reloadData한다.
-                        print(type(of: footballData?[0].teamName)) // 어떤 타입인지 확인하기 위한 코드
-                        guard let teamImgString = self.footballData?[0].teamBadge else { return } // 가드렛 문을 활용한 옵셔널 바인딩
-                        guard let teamNameString = self.footballData?[0].teamName else { return } // 가드렛 문을 활용한 옵셔널 바인딩
-                        guard let coachNameString = self.footballData?[0].coaches[0].coachName else { return } // 가드렛 문을 활용한 옵셔널 바인딩
+                        
+                        guard let teamImgString = self.footballData?[0].teamBadge else {
+                            return
+                        }
+                        // 가드렛 문을 활용한 옵셔널 바인딩
                         print(teamImgString)
+                        guard let teamNameString = self.footballData?[0].teamName else {
+                            return
+                        }
+                        // 가드렛 문을 활용한 옵셔널 바인딩
                         print(teamNameString)
+                        guard let coachNameString = self.footballData?[0].coaches[0].coachName else {
+                            return
+                        }
+                        // 가드렛 문을 활용한 옵셔널 바인딩
                         print(coachNameString)
                     } catch {
                         print(error)
@@ -195,12 +199,14 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             task.resume()
         }
     }
-
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
-        let playerCount : Int! = footballData?[0].players.count
-            
-        return 40 // 행의 개수를 40로 지정
+        var pCount = 10 // 기본 행의 개수를 10을 설정
+        if let playerCount = footballData?[0].players.count {
+            pCount = playerCount
+        }
+        return pCount // 행의 개수를 플레이어 수 만큼 지정
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // 행 관련 함수
@@ -214,39 +220,23 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
         let playerPos = footballData?[0].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
         plCell.playerPosLbl.text = playerPos
-//        let imageUrl = URL(string: "\(footballData?[0].players[indexPath.row].playerImage)")
-//        let imgData = try Data(contentsOf: imageUrl!)
-//        plCell.playerImg.image = UIImage(data: imgData)
         
-//        if let img = footballData?[0].players[indexPath.row].playerImage {
-//            print(type(of: img))
-//            let playerImgUrl: URL! = URL(string: img)
-//            print(type(of: playerImgUrl))
-//            do{
-//                let imageData = try! Data(contentsOf: playerImgUrl!)
-//                plCell.playerImg.image = UIImage(data: imageData)
-//                DispatchQueue.main.async {
-//                    self.playerTable.reloadData()
-//                } // 메인 스레드에서 playerTable을 reloadData한다.
-//            } catch {
-//                print("error")
-//            }
-//
-//
-//        }
         
-//        guard let playerImgString = footballData?[0].players[indexPath.row].playerImage else { return }
-        let playerImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/players/61937_miguel-san-roman.jpg")
-        let imageData = try! Data(contentsOf: playerImgUrl!)
-        plCell.playerImg.image = UIImage(data: imageData)
+        let imageUrlString = footballData?[0].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
+        var playerImage = "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg" // 사진이 없을 때 디폴트 이미지를 설정
         
-//
-//        let imageData = try! Data(contentsOf: playerImgUrl!)
-        //        print(type(of: playerImgUrl))
-//        print(type(of: imageData))
-//        plCell.playerImg.image = UIImage(data: imageData)
-        
-//        plCell.playerImg.image = UIImage(named: "\(footballData?[0].players[indexPath.row].playerImage)")
+        if imageUrlString != nil && imageUrlString != ""{ // 데이터의 값이 nil값이 거나 "" 이 아닐 때 , 즉 데이터 값이 존재 할 때
+            playerImage = imageUrlString!// imageUrlString에 데이터를 집어넣는다
+        }
+        let imageUrl = URL(string: playerImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
+        DispatchQueue.global().async {
+            let imgData = try? Data(contentsOf: imageUrl!) //
+            DispatchQueue.main.async {
+                if imgData != nil {
+                    plCell.playerImg.image = UIImage(data: imgData!)
+                }
+            }
+        }
         return plCell
     }
 }

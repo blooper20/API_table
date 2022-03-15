@@ -132,7 +132,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     var footballData : [TeamElement]?
     // TeamElement형 프로퍼티를 만든다
     
-    var test : String?
+    var teamNameData : String?
+    var coachNameData : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,11 +144,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         let teamNameString = self.footballData?[0].teamName
         let coachNameString = self.footballData?[0].coaches[0].coachName
         
-        test = teamNameString
-        print("뭐가 문젠데 진짜 :\(teamNameString)")
-        
-        teamNameLbl.text = test ?? "팀 이름"
-        teamCoachLbl.text = coachNameString ?? "감독이름"
+        teamNameLbl.text = teamNameData ?? "팀 이름"
+        teamCoachLbl.text = coachNameData ?? "감독이름"
         
         let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg")
         let teamImageData = try! Data(contentsOf: teamImgUrl!)
@@ -177,20 +175,27 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                         } // 메인 스레드에서 playerTable을 reloadData한다.
                         
                         guard let teamImgString = self.footballData?[0].teamBadge else {
+                            print("getData : teamImgString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
                         print(teamImgString)
                         guard let teamNameString = self.footballData?[0].teamName else {
+                            print("getData : teamNameString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
                         print(teamNameString)
                         guard let coachNameString = self.footballData?[0].coaches[0].coachName else {
+                            print("getData : coachNameString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
                         print(coachNameString)
+                        teamNameData = teamNameString
+                        coachNameData = coachNameString
+                        print("겟데이터 안에 있는 teamNameData \(teamNameData!)")
+                        print("겟데이터 안에 있는 coachNameData \(coachNameData!)")
                     } catch {
                         print(error)
                     }
@@ -221,7 +226,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         let playerPos = footballData?[0].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
         plCell.playerPosLbl.text = playerPos
         
-        
         let imageUrlString = footballData?[0].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
         var playerImage = "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg" // 사진이 없을 때 디폴트 이미지를 설정
         
@@ -234,6 +238,9 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             DispatchQueue.main.async {
                 if imgData != nil {
                     plCell.playerImg.image = UIImage(data: imgData!)
+                    
+                    self.teamNameLbl.text = self.teamNameData ?? "팀 이름"
+                    self.teamCoachLbl.text = self.coachNameData ?? "감독이름"
                 }
             }
         }

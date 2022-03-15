@@ -221,6 +221,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="teamBadgeImg" destination="DKT-Tw-t71" id="n7G-nY-Nfd"/>
+                                            <outlet property="teamCoachLbl" destination="cOM-6Q-md7" id="eJD-ra-cMZ"/>
                                             <outlet property="teamNameLbl" destination="Djx-n4-2O4" id="hKb-ZA-Yqx"/>
                                             <segue destination="BYZ-38-t0r" kind="show" identifier="leagueToTeam" id="u6o-b5-Ko6"/>
                                         </connections>

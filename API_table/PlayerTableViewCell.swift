@@ -14,7 +14,6 @@ class PlayerTableViewCell: UITableViewCell {
     @IBOutlet weak var playerNameLbl: UILabel!
     @IBOutlet weak var playerRatingLbl: UILabel!
     @IBOutlet weak var playerPosLbl: UILabel!
-    @IBOutlet weak var playerCountryLbl: UILabel!
     @IBOutlet weak var playerAgeLbl: UILabel!
     
     

@@ -16,7 +16,6 @@
 		D064A0E427C21925006E0722 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A0E327C21925006E0722 /* PlayerTableViewCell.swift */; };
 		D064A0E627C790A5006E0722 /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A0E527C790A4006E0722 /* TeamTableViewCell.swift */; };
 		D064A0E827C7CEB4006E0722 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A0E727C7CEB4006E0722 /* ViewController2.swift */; };
-		D064A0EA27C8CC68006E0722 /* ViewController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A0E927C8CC68006E0722 /* ViewController3.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		D064A0E327C21925006E0722 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		D064A0E527C790A4006E0722 /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
 		D064A0E727C7CEB4006E0722 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
-		D064A0E927C8CC68006E0722 /* ViewController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController3.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +66,6 @@
 				D01CE88E27ABD5E6003F35C3 /* SceneDelegate.swift */,
 				D01CE89027ABD5E6003F35C3 /* ViewController.swift */,
 				D064A0E727C7CEB4006E0722 /* ViewController2.swift */,
-				D064A0E927C8CC68006E0722 /* ViewController3.swift */,
 				D064A0E327C21925006E0722 /* PlayerTableViewCell.swift */,
 				D064A0E527C790A4006E0722 /* TeamTableViewCell.swift */,
 				D01CE89227ABD5E6003F35C3 /* Main.storyboard */,
@@ -155,7 +152,6 @@
 				D01CE89127ABD5E6003F35C3 /* ViewController.swift in Sources */,
 				D01CE88D27ABD5E6003F35C3 /* AppDelegate.swift in Sources */,
 				D01CE88F27ABD5E6003F35C3 /* SceneDelegate.swift in Sources */,
-				D064A0EA27C8CC68006E0722 /* ViewController3.swift in Sources */,
 				D064A0E827C7CEB4006E0722 /* ViewController2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

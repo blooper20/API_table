@@ -10,12 +10,8 @@ import UIKit
 class TeamTableViewCell: UITableViewCell {
     
     @IBOutlet weak var teamNameLbl: UILabel!
-    @IBOutlet weak var roundLbl: UILabel!
-    @IBOutlet weak var WDLLbl: UILabel!
-    @IBOutlet weak var goalDifferenceLbl: UILabel!
-    @IBOutlet weak var ptsLbl: UILabel!
-    @IBOutlet weak var positionLbl: UILabel!
     @IBOutlet weak var teamBadgeImg: UIImageView!
+    @IBOutlet weak var teamCoachLbl: UILabel!
     
     
     override func awakeFromNib() {

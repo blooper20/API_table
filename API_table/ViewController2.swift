@@ -8,18 +8,20 @@
 import UIKit
 
 class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSource {
-   
-    @IBOutlet weak var teamTable: UITableView!
     
-
+    @IBOutlet weak var teamTable: UITableView!
+    @IBOutlet weak var teamCell: UIView!
+    
+    
+    var selectedTeam : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         teamTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         teamTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
     }
-
-
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         return 5 // 행의 개수를 5로 지정
     }
@@ -31,7 +33,23 @@ class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSour
         return teamCell
     }
     
-
-   
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { // 행을 클릭했을 때
+        selectedTeam = indexPath.row
+        guard let teamIndex = selectedTeam else {
+            return
+        }
+        print("didSelectRowAt 안에 있는 selectedTeam : \(teamIndex)")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let sendData = segue.destination as? ViewController else {
+            return
+        }
+        guard let selectedTeamCell = sender as? TeamTableViewCell else {
+            return
+        }
+//        let indexPath = tableView.indexPathForCell(selectedTeamCell)!
+        sendData.teamChoiceData = selectedTeam
+        print("프리페어 안에 있는 selectedTeam : \(sendData.teamChoiceData)")
+    }
 }

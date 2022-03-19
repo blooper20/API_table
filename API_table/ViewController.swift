@@ -115,25 +115,18 @@ typealias Team = [TeamElement]
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var playerTable: UITableView! // 관심 팀의 플레이어 테이블을 playerTable로 선언
-    @IBOutlet weak var playerNameLbl: UILabel!
-    @IBOutlet weak var playerRatingLbl: UILabel!
-    @IBOutlet weak var playerAgeLbl: UILabel!
-    @IBOutlet weak var playerNOLbl: UILabel!
-    @IBOutlet weak var playerPosLbl: UILabel!
-    @IBOutlet weak var playerImg: UIImageView!
-    
     @IBOutlet weak var teamNameLbl: UILabel!
     @IBOutlet weak var teamCoachLbl: UILabel!
     @IBOutlet weak var teamImg: UIImageView!
-    
-    
-    
+        
     let footballURL = "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=42cd81facec04ac1a8321d9457890b72043b63281d7b83abff0673002ffbca0e"
     var footballData : [TeamElement]?
     // TeamElement형 프로퍼티를 만든다
     
     var teamNameData : String?
     var coachNameData : String?
+    
+    var teamChoiceData : Int? // ViewController2에서 받아온 선택한 행의 정보를 받아와서 저장하는 변수 선언
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,7 +143,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg")
         let teamImageData = try! Data(contentsOf: teamImgUrl!)
         teamImg.image = UIImage(data: teamImageData)
-        
+        print("넘어온 selectedTeam : \(teamChoiceData)")
+
     }
     
     func getData() {
@@ -179,23 +173,18 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        print(teamImgString)
                         guard let teamNameString = self.footballData?[0].teamName else {
                             print("getData : teamNameString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        print(teamNameString)
                         guard let coachNameString = self.footballData?[0].coaches[0].coachName else {
                             print("getData : coachNameString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        print(coachNameString)
                         teamNameData = teamNameString
                         coachNameData = coachNameString
-                        print("겟데이터 안에 있는 teamNameData \(teamNameData!)")
-                        print("겟데이터 안에 있는 coachNameData \(coachNameData!)")
                     } catch {
                         print(error)
                     }
@@ -247,10 +236,11 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             
             DispatchQueue.main.async {
                 if imgData != nil {
-                    plCell.playerImg.image = UIImage(data: imgData!)
+                    plCell.playerImg.image = UIImage(data: imgData! )
                     
                     self.teamNameLbl.text = self.teamNameData ?? "팀 이름"
                     self.teamCoachLbl.text = self.coachNameData ?? "감독이름"
+                    // nil 합병 연산자로 teamNameData,coachNameData의 값이 nil일 때 기본적으로 출력될 문구 설정
                     self.teamImg.image = UIImage(data: teamImgData!)
                     // 뷰 컨트롤러에 있는 이미지, 라벨들을 다시 설정해준다.
                 }

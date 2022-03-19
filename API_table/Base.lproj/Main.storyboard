@@ -113,7 +113,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감독 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmX-bu-Tjs">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감독 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmX-bu-Tjs">
                                 <rect key="frame" x="157" y="174" width="247" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
@@ -194,7 +194,7 @@
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="qqr-c6-3ad"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김독 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOM-6Q-md7">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감독 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOM-6Q-md7">
                                                     <rect key="frame" x="139" y="91" width="270" height="42"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="270" id="Gdg-LU-3ac"/>
@@ -240,6 +240,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="vCW-ri-gKa"/>
                     <connections>
+                        <outlet property="teamCell" destination="B5W-YV-0TX" id="k8g-da-bVI"/>
                         <outlet property="teamTable" destination="Pji-6E-scM" id="2eQ-Yw-lfQ"/>
                     </connections>
                 </viewController>

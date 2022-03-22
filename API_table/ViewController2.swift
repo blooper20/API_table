@@ -10,7 +10,7 @@ import UIKit
 class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var teamTable: UITableView!
-    @IBOutlet weak var teamCell: UIView!
+//    @IBOutlet weak var teamCell: UIView!
     
     
     var selectedTeam : Int?

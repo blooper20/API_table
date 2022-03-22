@@ -210,6 +210,7 @@
                                             <constraints>
                                                 <constraint firstItem="Djx-n4-2O4" firstAttribute="top" relation="lessThanOrEqual" secondItem="B5W-YV-0TX" secondAttribute="top" constant="15" id="1e7-UX-vfP"/>
                                                 <constraint firstAttribute="trailing" secondItem="cOM-6Q-md7" secondAttribute="trailing" constant="5" id="5sh-XX-JiX"/>
+                                                <constraint firstItem="cOM-6Q-md7" firstAttribute="top" secondItem="Djx-n4-2O4" secondAttribute="bottom" constant="15" id="Gfu-Qc-xnJ"/>
                                                 <constraint firstAttribute="bottom" secondItem="cOM-6Q-md7" secondAttribute="bottom" constant="15" id="I4m-MI-IqJ"/>
                                                 <constraint firstItem="cOM-6Q-md7" firstAttribute="top" relation="lessThanOrEqual" secondItem="Djx-n4-2O4" secondAttribute="bottom" constant="15" id="JhI-cf-rb4"/>
                                                 <constraint firstItem="Djx-n4-2O4" firstAttribute="leading" secondItem="DKT-Tw-t71" secondAttribute="trailing" constant="10" id="QAz-FL-Lou"/>

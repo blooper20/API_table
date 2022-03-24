@@ -132,19 +132,22 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         playerTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
+        guard let teamData = teamChoiceData else {
+            print("teamData = nil")
+            return
+        }// ViewController2에서 넘어온 클릭한 행의 인덱스 정보를 가진 변수를 옵셔널 바인딩함
+        print("넘어온 selectedTeam : \(teamData)")
         getData() // API를 호출하여 디코딩하는 함수 호출
+        print("teamData 정상작동 확인 : \(footballData?[teamData].players[1].playerName)")
         
-        let teamNameString = self.footballData?[0].teamName
-        let coachNameString = self.footballData?[0].coaches[0].coachName
-        
+        let teamNameString = self.footballData?[teamData].teamName
+        let coachNameString = self.footballData?[teamData].coaches[0].coachName
         teamNameLbl.text = teamNameData ?? "팀 이름"
         teamCoachLbl.text = coachNameData ?? "감독이름"
         
         let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg")
         let teamImageData = try! Data(contentsOf: teamImgUrl!)
         teamImg.image = UIImage(data: teamImageData)
-        print("넘어온 selectedTeam : \(teamChoiceData)")
-
     }
     
     func getData() {

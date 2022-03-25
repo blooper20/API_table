@@ -178,28 +178,27 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="팀 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djx-n4-2O4">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="팀 이름" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Djx-n4-2O4">
                                                     <rect key="frame" x="130" y="15" width="279" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="60" id="MUK-CP-lcy"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="279" id="ZLY-dO-xEe"/>
+                                                        <constraint firstAttribute="width" constant="279" id="iUp-Hg-9T2"/>
+                                                        <constraint firstAttribute="height" constant="60" id="n4W-Gm-HN2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DKT-Tw-t71">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DKT-Tw-t71">
                                                     <rect key="frame" x="10" y="10" width="100" height="130"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="I4L-nn-CLb"/>
-                                                        <constraint firstAttribute="height" constant="130" id="RNr-GW-5eW"/>
-                                                    </constraints>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="감독 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOM-6Q-md7">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="감독 이름" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cOM-6Q-md7">
                                                     <rect key="frame" x="130" y="90" width="279" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="vcN-be-zDy"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="279" id="xVf-U2-THX"/>
+                                                        <constraint firstAttribute="width" constant="279" id="m4Y-iK-e6Z"/>
+                                                        <constraint firstAttribute="height" constant="40" id="mHt-UU-uEr"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -207,15 +206,15 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="cOM-6Q-md7" firstAttribute="top" secondItem="Djx-n4-2O4" secondAttribute="bottom" constant="15" id="24w-ru-Wpw"/>
-                                                <constraint firstItem="Djx-n4-2O4" firstAttribute="top" secondItem="B5W-YV-0TX" secondAttribute="topMargin" constant="4" id="BOE-aQ-TdA"/>
-                                                <constraint firstItem="DKT-Tw-t71" firstAttribute="centerY" secondItem="B5W-YV-0TX" secondAttribute="centerY" id="Jtr-ed-TKu"/>
-                                                <constraint firstItem="Djx-n4-2O4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DKT-Tw-t71" secondAttribute="trailing" symbolic="YES" id="Qpb-go-awS"/>
-                                                <constraint firstItem="DKT-Tw-t71" firstAttribute="leading" secondItem="B5W-YV-0TX" secondAttribute="leadingMargin" constant="-10" id="a6L-EV-vxD"/>
-                                                <constraint firstAttribute="trailing" secondItem="cOM-6Q-md7" secondAttribute="trailing" constant="5" id="chT-5K-IZ0"/>
-                                                <constraint firstAttribute="trailing" secondItem="Djx-n4-2O4" secondAttribute="trailing" constant="5" id="hQq-hn-pK0"/>
-                                                <constraint firstAttribute="bottom" secondItem="cOM-6Q-md7" secondAttribute="bottom" constant="20" symbolic="YES" id="nZI-Pv-2ed"/>
-                                                <constraint firstItem="cOM-6Q-md7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DKT-Tw-t71" secondAttribute="trailing" symbolic="YES" id="vbJ-un-IHA"/>
+                                                <constraint firstItem="DKT-Tw-t71" firstAttribute="centerY" secondItem="B5W-YV-0TX" secondAttribute="centerY" id="F0b-bq-yCi"/>
+                                                <constraint firstAttribute="trailing" secondItem="cOM-6Q-md7" secondAttribute="trailing" constant="5" id="PJY-3X-1Ue"/>
+                                                <constraint firstItem="Djx-n4-2O4" firstAttribute="leading" secondItem="DKT-Tw-t71" secondAttribute="trailing" constant="20" id="VRR-J3-iEz"/>
+                                                <constraint firstAttribute="trailing" secondItem="Djx-n4-2O4" secondAttribute="trailing" constant="5" id="WZE-bY-kVh"/>
+                                                <constraint firstAttribute="bottom" secondItem="cOM-6Q-md7" secondAttribute="bottom" constant="20" symbolic="YES" id="hhu-Pi-Mo2"/>
+                                                <constraint firstItem="DKT-Tw-t71" firstAttribute="leading" secondItem="B5W-YV-0TX" secondAttribute="leadingMargin" constant="-10" id="jXZ-0y-qWC"/>
+                                                <constraint firstItem="Djx-n4-2O4" firstAttribute="top" secondItem="B5W-YV-0TX" secondAttribute="top" constant="15" id="ns9-xU-k2V"/>
+                                                <constraint firstAttribute="trailing" secondItem="cOM-6Q-md7" secondAttribute="trailing" constant="5" id="pdw-3M-Sp0"/>
+                                                <constraint firstItem="DKT-Tw-t71" firstAttribute="top" secondItem="B5W-YV-0TX" secondAttribute="top" constant="10" id="pi6-Gv-uk2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

@@ -17,11 +17,13 @@ class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        teamTable.rowHeight = 150
         teamTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         teamTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
 //        var vC = ViewController.self
 //        vC.getData()
         getData2()
+        
     }
     
     func getData2() {

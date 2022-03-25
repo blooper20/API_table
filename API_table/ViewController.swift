@@ -140,23 +140,21 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         print("넘어온 인덱싱 정보 : \(teamData)")
         
         getData() // API를 호출하여 디코딩하는 함수 호출
-        let teamNameString = self.footballData?[3].teamName
-        let coachNameString = self.footballData?[3].coaches[0].coachName
+        let teamNameString = self.footballData?[teamData].teamName
+        let coachNameString = self.footballData?[teamData].coaches[0].coachName
         teamNameLbl.text = teamNameData ?? "팀 이름"
         teamCoachLbl.text = coachNameData ?? "감독이름"
         
-        let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/73_atl.-madrid.jpg")
+        let teamImgUrl: URL! = URL(string: "https://apiv3.apifootball.com/badges/")
         let teamImageData = try! Data(contentsOf: teamImgUrl!)
         teamImg.image = UIImage(data: teamImageData)
     }
     
     func getData() {
-        
         guard let teamData = teamChoiceData else {
             print("teamData = nil")
             return
         }// ViewController2에서 넘어온 클릭한 행의 인덱스 정보를 가진 변수를 옵셔널 바인딩함
-        
         if let url = URL(string: footballURL) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { [self] (data, response, error) in
@@ -220,19 +218,15 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         // cell의 아이디가 "playerCell"인 것을 사용
         
         
-        if let td = teamChoiceData {
-            
+        if let td = teamChoiceData { // 넘어온 인덱싱 정보를 옵셔널바인딩
             plCell.playerNameLbl.text = footballData?[td].players[indexPath.row].playerName
             plCell.playerRatingLbl.text = footballData?[td].players[indexPath.row].playerRating
             plCell.playerAgeLbl.text = footballData?[td].players[indexPath.row].playerAge
             plCell.playerNOLbl.text = footballData?[td].players[indexPath.row].playerNumber
-            
             let playerPos = footballData?[td].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
             plCell.playerPosLbl.text = playerPos
-            
             let imageUrlString = footballData?[td].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
             let teamImageUrlString = footballData?[td].teamBadge
-            
             var playerImage = "https://apiv3.apifootball.com/badges/jpg"
             var teamImage = "https://apiv3.apifootball.com/badges/jpg" // 사진이 없을 때 디폴트 이미지를 없는 값으로 설정
             
@@ -242,7 +236,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             if teamImageUrlString != nil && teamImageUrlString != ""{ // 데이터의 값이 nil값이 거나 "" 이 아닐 때 , 즉 데이터 값이 존재 할 때
                 teamImage = teamImageUrlString!// imageUrlString에 데이터를 집어넣는다
             }
-            
             let imageUrl = URL(string: playerImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
             let teamImageUrl = URL(string: teamImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
             DispatchQueue.global().async {

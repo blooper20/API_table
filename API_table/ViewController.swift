@@ -206,9 +206,10 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         var pCount = 10 // 기본 행의 개수를 10을 설정
-        
-        if let playerCount = footballData?[3].players.count {
-            pCount = playerCount
+        if let teamData = teamChoiceData {
+            if let playerCount = footballData?[teamData].players.count {
+                pCount = playerCount
+            }
         }
         return pCount // 행의 개수를 플레이어 수 만큼 지정
     }

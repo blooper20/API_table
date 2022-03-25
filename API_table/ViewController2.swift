@@ -103,11 +103,6 @@ class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { // 행을 클릭했을 때
-        selectedTeam = indexPath.row
-        guard let teamIndex = selectedTeam else {
-            return
-        }
-        print("didSelectRowAt 안에 있는 selectedTeam : \(teamIndex)")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -117,6 +112,5 @@ class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSour
         let teamIndexPath = teamTable.indexPathForSelectedRow // teamTable의 선택된 행의 정보를 상수 teamIndexPath에 저장
         let teamRow = teamIndexPath?.row //
         sendData.teamChoiceData = teamRow // ViewController에 teamChoiceData에 selectedTeam를 초기화
-        print("프리페어 안에 있는 selectedTeam : \(teamRow)")
     }
 }

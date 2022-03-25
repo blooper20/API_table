@@ -132,16 +132,16 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
         playerTable.dataSource = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
         playerTable.delegate = self //playerTable의 dataSorce는 이 클래스 안에서 처리한다.
+        
         guard let teamData = teamChoiceData else {
             print("teamData = nil")
             return
         }// ViewController2에서 넘어온 클릭한 행의 인덱스 정보를 가진 변수를 옵셔널 바인딩함
-        print("넘어온 selectedTeam : \(teamData)")
-        getData() // API를 호출하여 디코딩하는 함수 호출
-        print("teamData 정상작동 확인 : \(footballData?[teamData].players[1].playerName)")
+        print("넘어온 인덱싱 정보 : \(teamData)")
         
-        let teamNameString = self.footballData?[teamData].teamName
-        let coachNameString = self.footballData?[teamData].coaches[0].coachName
+        getData() // API를 호출하여 디코딩하는 함수 호출
+        let teamNameString = self.footballData?[3].teamName
+        let coachNameString = self.footballData?[3].coaches[0].coachName
         teamNameLbl.text = teamNameData ?? "팀 이름"
         teamCoachLbl.text = coachNameData ?? "감독이름"
         
@@ -171,17 +171,17 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                             self.playerTable.reloadData()
                         } // 메인 스레드에서 playerTable을 reloadData한다.
                         
-                        guard let teamImgString = self.footballData?[0].teamBadge else {
+                        guard let teamImgString = self.footballData?[3].teamBadge else {
                             print("getData : teamImgString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        guard let teamNameString = self.footballData?[0].teamName else {
+                        guard let teamNameString = self.footballData?[3].teamName else {
                             print("getData : teamNameString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        guard let coachNameString = self.footballData?[0].coaches[0].coachName else {
+                        guard let coachNameString = self.footballData?[3].coaches[0].coachName else {
                             print("getData : coachNameString = nil")
                             return
                         }
@@ -200,7 +200,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         var pCount = 10 // 기본 행의 개수를 10을 설정
-        if let playerCount = footballData?[0].players.count {
+        if let playerCount = footballData?[3].players.count {
             pCount = playerCount
         }
         return pCount // 행의 개수를 플레이어 수 만큼 지정
@@ -210,16 +210,16 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
         let plCell = tableView.dequeueReusableCell(withIdentifier: "playerCell", for: indexPath) as! PlayerTableViewCell
         // cell의 아이디가 "playerCell"인 것을 사용
-        plCell.playerNameLbl.text = footballData?[0].players[indexPath.row].playerName
-        plCell.playerRatingLbl.text = footballData?[0].players[indexPath.row].playerRating
-        plCell.playerAgeLbl.text = footballData?[0].players[indexPath.row].playerAge
-        plCell.playerNOLbl.text = footballData?[0].players[indexPath.row].playerNumber
+        plCell.playerNameLbl.text = footballData?[3].players[indexPath.row].playerName
+        plCell.playerRatingLbl.text = footballData?[3].players[indexPath.row].playerRating
+        plCell.playerAgeLbl.text = footballData?[3].players[indexPath.row].playerAge
+        plCell.playerNOLbl.text = footballData?[3].players[indexPath.row].playerNumber
         
-        let playerPos = footballData?[0].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
+        let playerPos = footballData?[3].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
         plCell.playerPosLbl.text = playerPos
         
-        let imageUrlString = footballData?[0].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
-        let teamImageUrlString = footballData?[0].teamBadge
+        let imageUrlString = footballData?[3].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
+        let teamImageUrlString = footballData?[3].teamBadge
         
         var playerImage = "https://apiv3.apifootball.com/badges/jpg"
         var teamImage = "https://apiv3.apifootball.com/badges/jpg" // 사진이 없을 때 디폴트 이미지를 없는 값으로 설정

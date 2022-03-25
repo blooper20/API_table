@@ -118,7 +118,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var teamNameLbl: UILabel!
     @IBOutlet weak var teamCoachLbl: UILabel!
     @IBOutlet weak var teamImg: UIImageView!
-        
+    
     let footballURL = "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=42cd81facec04ac1a8321d9457890b72043b63281d7b83abff0673002ffbca0e"
     var footballData : [TeamElement]?
     // TeamElement형 프로퍼티를 만든다
@@ -151,6 +151,12 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func getData() {
+        
+        guard let teamData = teamChoiceData else {
+            print("teamData = nil")
+            return
+        }// ViewController2에서 넘어온 클릭한 행의 인덱스 정보를 가진 변수를 옵셔널 바인딩함
+        
         if let url = URL(string: footballURL) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { [self] (data, response, error) in
@@ -171,17 +177,17 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                             self.playerTable.reloadData()
                         } // 메인 스레드에서 playerTable을 reloadData한다.
                         
-                        guard let teamImgString = self.footballData?[3].teamBadge else {
+                        guard let teamImgString = self.footballData?[teamData].teamBadge else {
                             print("getData : teamImgString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        guard let teamNameString = self.footballData?[3].teamName else {
+                        guard let teamNameString = self.footballData?[teamData].teamName else {
                             print("getData : teamNameString = nil")
                             return
                         }
                         // 가드렛 문을 활용한 옵셔널 바인딩
-                        guard let coachNameString = self.footballData?[3].coaches[0].coachName else {
+                        guard let coachNameString = self.footballData?[teamData].coaches[0].coachName else {
                             print("getData : coachNameString = nil")
                             return
                         }
@@ -200,6 +206,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // 섹션 관련 함수
         var pCount = 10 // 기본 행의 개수를 10을 설정
+        
         if let playerCount = footballData?[3].players.count {
             pCount = playerCount
         }
@@ -210,42 +217,47 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
         let plCell = tableView.dequeueReusableCell(withIdentifier: "playerCell", for: indexPath) as! PlayerTableViewCell
         // cell의 아이디가 "playerCell"인 것을 사용
-        plCell.playerNameLbl.text = footballData?[3].players[indexPath.row].playerName
-        plCell.playerRatingLbl.text = footballData?[3].players[indexPath.row].playerRating
-        plCell.playerAgeLbl.text = footballData?[3].players[indexPath.row].playerAge
-        plCell.playerNOLbl.text = footballData?[3].players[indexPath.row].playerNumber
         
-        let playerPos = footballData?[3].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
-        plCell.playerPosLbl.text = playerPos
         
-        let imageUrlString = footballData?[3].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
-        let teamImageUrlString = footballData?[3].teamBadge
-        
-        var playerImage = "https://apiv3.apifootball.com/badges/jpg"
-        var teamImage = "https://apiv3.apifootball.com/badges/jpg" // 사진이 없을 때 디폴트 이미지를 없는 값으로 설정
-        
-        if imageUrlString != nil && imageUrlString != ""{ // 데이터의 값이 nil값이 거나 "" 이 아닐 때 , 즉 데이터 값이 존재 할 때
-            playerImage = imageUrlString!// imageUrlString에 데이터를 집어넣는다
-        }
-        if teamImageUrlString != nil && teamImageUrlString != ""{ // 데이터의 값이 nil값이 거나 "" 이 아닐 때 , 즉 데이터 값이 존재 할 때
-            teamImage = teamImageUrlString!// imageUrlString에 데이터를 집어넣는다
-        }
-        
-        let imageUrl = URL(string: playerImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
-        let teamImageUrl = URL(string: teamImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
-        DispatchQueue.global().async {
-            let imgData = try? Data(contentsOf: imageUrl!) //
-            let teamImgData = try? Data(contentsOf: teamImageUrl!) //
+        if let td = teamChoiceData {
             
-            DispatchQueue.main.async {
-                if imgData != nil {
-                    plCell.playerImg.image = UIImage(data: imgData! )
-                    
-                    self.teamNameLbl.text = self.teamNameData ?? "팀 이름"
-                    self.teamCoachLbl.text = self.coachNameData ?? "감독이름"
-                    // nil 합병 연산자로 teamNameData,coachNameData의 값이 nil일 때 기본적으로 출력될 문구 설정
-                    self.teamImg.image = UIImage(data: teamImgData!)
-                    // 뷰 컨트롤러에 있는 이미지, 라벨들을 다시 설정해준다.
+            plCell.playerNameLbl.text = footballData?[td].players[indexPath.row].playerName
+            plCell.playerRatingLbl.text = footballData?[td].players[indexPath.row].playerRating
+            plCell.playerAgeLbl.text = footballData?[td].players[indexPath.row].playerAge
+            plCell.playerNOLbl.text = footballData?[td].players[indexPath.row].playerNumber
+            
+            let playerPos = footballData?[td].players[indexPath.row].playerType.rawValue // 옵셔널을 풀기위한 상수 선언
+            plCell.playerPosLbl.text = playerPos
+            
+            let imageUrlString = footballData?[td].players[indexPath.row].playerImage // imageUrlString 값에 데이터 파싱한 값을 넣는다.
+            let teamImageUrlString = footballData?[td].teamBadge
+            
+            var playerImage = "https://apiv3.apifootball.com/badges/jpg"
+            var teamImage = "https://apiv3.apifootball.com/badges/jpg" // 사진이 없을 때 디폴트 이미지를 없는 값으로 설정
+            
+            if imageUrlString != nil && imageUrlString != ""{ // 데이터의 값이 nil값이 거나 "" 이 아닐 때 , 즉 데이터 값이 존재 할 때
+                playerImage = imageUrlString!// imageUrlString에 데이터를 집어넣는다
+            }
+            if teamImageUrlString != nil && teamImageUrlString != ""{ // 데이터의 값이 nil값이 거나 "" 이 아닐 때 , 즉 데이터 값이 존재 할 때
+                teamImage = teamImageUrlString!// imageUrlString에 데이터를 집어넣는다
+            }
+            
+            let imageUrl = URL(string: playerImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
+            let teamImageUrl = URL(string: teamImage) // imageUrl에 playerImage의 String형 정보를 받아와 URL 데이터로 전환 시켜준다.
+            DispatchQueue.global().async {
+                let imgData = try? Data(contentsOf: imageUrl!) //
+                let teamImgData = try? Data(contentsOf: teamImageUrl!) //
+                
+                DispatchQueue.main.async {
+                    if imgData != nil {
+                        plCell.playerImg.image = UIImage(data: imgData! )
+                        
+                        self.teamNameLbl.text = self.teamNameData ?? "팀 이름"
+                        self.teamCoachLbl.text = self.coachNameData ?? "감독이름"
+                        // nil 합병 연산자로 teamNameData,coachNameData의 값이 nil일 때 기본적으로 출력될 문구 설정
+                        self.teamImg.image = UIImage(data: teamImgData!)
+                        // 뷰 컨트롤러에 있는 이미지, 라벨들을 다시 설정해준다.
+                    }
                 }
             }
         }

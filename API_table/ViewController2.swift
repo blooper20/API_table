@@ -115,4 +115,5 @@ class ViewController2: UIViewController,UITableViewDelegate, UITableViewDataSour
         let teamRow = teamIndexPath?.row //
         sendData.teamChoiceData = teamRow // ViewController에 teamChoiceData에 selectedTeam를 초기화
     }
+    
 }

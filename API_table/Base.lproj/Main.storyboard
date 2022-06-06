@@ -109,6 +109,7 @@
                                             <outlet property="playerNameLbl" destination="ci5-bG-2Zo" id="zrU-81-7vc"/>
                                             <outlet property="playerPosLbl" destination="5rm-8k-rSA" id="n1l-nk-gj6"/>
                                             <outlet property="playerRatingLbl" destination="QT6-GR-5h5" id="TV1-GI-cy5"/>
+                                            <segue destination="h2g-6J-d5V" kind="show" id="lug-aa-Azs"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -158,6 +159,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-441" y="44"/>
+        </scene>
+        <!--Player Web View Controller-->
+        <scene sceneID="DhX-qK-vnn">
+            <objects>
+                <viewController id="h2g-6J-d5V" customClass="PlayerWebViewController" customModule="API_table" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pEY-rL-FGB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ymx-6U-o1I">
+                                <rect key="frame" x="0.0" y="44" width="414" height="798"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Uvh-G1-tbx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ymx-6U-o1I" firstAttribute="top" secondItem="Uvh-G1-tbx" secondAttribute="top" id="2nt-LO-u1E"/>
+                            <constraint firstItem="Uvh-G1-tbx" firstAttribute="trailing" secondItem="Ymx-6U-o1I" secondAttribute="trailing" id="Ujo-xR-hXn"/>
+                            <constraint firstItem="Uvh-G1-tbx" firstAttribute="bottom" secondItem="Ymx-6U-o1I" secondAttribute="bottom" id="eZk-9G-4s2"/>
+                            <constraint firstItem="Ymx-6U-o1I" firstAttribute="leading" secondItem="Uvh-G1-tbx" secondAttribute="leading" id="emZ-Pc-jhc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="81v-bP-wkH"/>
+                    <connections>
+                        <outlet property="webView" destination="Ymx-6U-o1I" id="lKZ-Jd-R3i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cIa-4G-ze9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="320" y="44"/>
         </scene>
         <!--리그 순위-->
         <scene sceneID="xxR-vx-xV6">

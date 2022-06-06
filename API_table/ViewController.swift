@@ -257,4 +257,13 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         }
         return plCell
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // 실행되기 직전에 자동으로 호출되는 메서드
+        guard let dest = segue.destination as? PlayerWebViewController else {
+            return
+        }
+        let playerIndexPath = playerTable.indexPathForSelectedRow!
+        let row = playerIndexPath.row
+        dest.playerName = (footballData?[row].players[row].playerName)!
+    }
 }

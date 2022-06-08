@@ -15,7 +15,7 @@ class PlayerWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = playerName
-        let urlKorString = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" + playerName
+        let urlKorString = "https://www.google.com/search?q=" + playerName
         let urlString = urlKorString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         guard let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)

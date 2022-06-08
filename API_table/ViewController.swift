@@ -263,7 +263,11 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             return
         }
         let playerIndexPath = playerTable.indexPathForSelectedRow!
-        let row = playerIndexPath.row
-        dest.playerName = (footballData?[row].players[row].playerName)!
+        let playerRow = playerIndexPath.row
+        guard let teamData = teamChoiceData else {
+            print("teamData = nil")
+            return
+        }// ViewController2에서 넘어온 클릭한 행의 인덱스 정보를 가진 변수를 옵셔널 바인딩함
+        dest.playerName = (footballData?[teamData].players[playerRow].playerName)!
     }
 }
